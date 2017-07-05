@@ -5,7 +5,7 @@ import simulation.*;
 public final class ATMExec {
 	
 	private boolean isOn;
-	private int amountOfCashInDispenser;
+	private static int amountOfCashInDispenser;
 	private int cardNumber;
 	private int[] PIN = {0, 42, 123, 1234};
 	private int userPIN;
@@ -28,7 +28,7 @@ public final class ATMExec {
 		String answer = "Must be a valid integer >= 0";
 		if (billsNumber >= 0 && String.valueOf(billsNumber).length() < 10) {
 			amountOfCashInDispenser = 20*billsNumber;
-			answer = "The dollar value of the bills in the cash dispenser is " + amountOfCashInDispenser; 
+			answer = "The avaliable dollar value in the cash dispenser is " + amountOfCashInDispenser; 
 		}
 		return answer;
 	}
@@ -55,6 +55,9 @@ public final class ATMExec {
 		return  PIN_number == PIN[cardNumber];
 	}
 	
+	public static int getAmountOfCashInDispenser() {
+		return amountOfCashInDispenser;
+	}
 	
 	
 }

@@ -44,9 +44,12 @@ public final class ATMExec {
 	
 	public String insertPIN(int PIN_number){
 		String answer = "PIN incorret";
-		if (isValidPIN(PIN_number)){
+		if (PIN_number == 0) {
+			answer = "Waiting for PIN";
+		}
+		else if (isValidPIN(PIN_number)){
 			this.userPIN = PIN_number;
-			answer = "PIN correct";
+			answer = "PIN correct. Please choose transiction type";
 		}
 		return answer;
 	}

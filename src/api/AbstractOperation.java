@@ -139,8 +139,7 @@ public class Withdrawal extends AbstractOperation{
 			double currentDestinyCash = AbstractOperation.getAmountOfCashFromAccount(destinyAccount);
 			if (sourceAccount.equals(destinyAccount)){
 				msg = "Can't transfer money from one account to itself";
-			}
-			if (amount <= currentSourceCash && currentSourceCash - amount >= 0.0){
+			} else if (amount <= currentSourceCash && currentSourceCash - amount >= 0.0){
 				this.updateAccount(sourceAccount, currentSourceCash - amount);
 				this.updateAccount(destinyAccount, currentDestinyCash + amount);
 				msg = "Would you like to do another transaction?";

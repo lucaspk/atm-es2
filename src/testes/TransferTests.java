@@ -60,5 +60,27 @@ public class TransferTests {
 	public void avlTest7() {
 		Assert.assertEquals("Invalid amount", operation.transferMoney("checking", "savings", 1e19));
 	}
+	
+	@Test
+	public void invalidCardTest() {
+		Assert.assertEquals("Invalid card", operation.transferMoney(123, 123, "checking", "savings", 12.34));
+	}
+	
+	@Test
+	public void equalAccountsTest() {
+		Assert.assertEquals("Can't transfer money from one account to itself", operation.transferMoney(1, 42, "checking", "checking", 12.34));
+	}
+	
+	@Test
+	public void amountGreaterThanBalanceTest() {
+		Assert.assertEquals("Insufficient avaliable balance", operation.transferMoney(1, 42, "checking", "savings", 123.45));
+	}
+	
+	@Test
+	public void happyPathTest() {
+		Assert.assertEquals(SUCCESS, operation.transferMoney(1, 42, "checking", "savings", 12.34));
+		Assert.assertEquals(100 - 12.34, AbstractOperation.getAmountOfCashFromAccount("checking"), 1e-3);
+		Assert.assertEquals(100 + 12.34, AbstractOperation.getAmountOfCashFromAccount("savings"), 1e-3);
+	}
 
 }

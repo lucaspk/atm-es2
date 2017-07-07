@@ -6,9 +6,17 @@ public final class ATMExec {
 	private AbstractOperation operation;
 	private boolean isOn;
 	private static long amountOfCashInDispenser;
-	private static int cardNumber;
-	private static int[] PIN = {0, 42, 123, 1234};
-	private int userPIN;
+	private static long cardNumber;
+	private static int[] PIN = {0, 42, 1234, 66, 2145};
+	private long userPIN;
+	
+	protected static boolean isValidCard(int cardNumber) {
+		return cardNumber > 0 && cardNumber < PIN.length;
+	}
+	
+	protected static boolean isValidPIN(long PIN_number) {
+		return  PIN_number == PIN[(int) cardNumber];
+	}
 	
 	public void turnOn(){
 		isOn = true;
@@ -35,16 +43,25 @@ public final class ATMExec {
 		return answer;
 	}
 	
-	public String insertCard(int cardNumber){
+	public String insertCard(String cardNumber){
 		String answer = "Unable to read card";
-		if (String.valueOf(cardNumber).length() < 10){
-			this.cardNumber = cardNumber;
+		if (cardNumber.matches("[0-9]") && cardNumber.length() < 10){
+			this.cardNumber = Integer.parseInt(cardNumber);
 			answer = "Card accepted";
 		}
 		return answer;
 	}
 	
-	public String insertPIN(int PIN_number){
+	public String insertCard(long cardNumber){
+		String answer = "Unable to read card";
+		if (cardNumber > 0 && String.valueOf(cardNumber).length() < 10){
+			this.cardNumber = cardNumber;
+			answer = "Card accepted";
+		}
+		return answer;
+	}
+		
+	public String insertPIN(long PIN_number){
 		String answer = "PIN incorret";
 		if (PIN_number == 0) {
 			answer = "Waiting for PIN";
@@ -55,15 +72,7 @@ public final class ATMExec {
 		}
 		return answer;
 	}
-	
-	protected static boolean isValidCard(int cardNumber) {
-		return cardNumber > 0 && cardNumber < PIN.length;
-	}
-	
-	protected static boolean isValidPIN(int PIN_number) {
-		return  PIN_number == PIN[cardNumber];
-	}
-	
+		
 	public static long getAmountOfCashInDispenser() {
 		return amountOfCashInDispenser;
 	}

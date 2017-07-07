@@ -35,7 +35,7 @@ public abstract class AbstractOperation {
 		return null;
 	}
 	
-	public class Withdrawal extends AbstractOperation{
+public class Withdrawal extends AbstractOperation{
 		
 		private String auxOperate(int cardNumber, int userPIN, double value, String accountType){
 			String answer = detectInvalid(cardNumber, userPIN);
@@ -54,27 +54,27 @@ public abstract class AbstractOperation {
 			return answer;
 		}		
 		
-		String operateInSavings(int cardNumber, int userPIN, double value) {
+		public String operateInSavings(int cardNumber, int userPIN, double value) {
 			return auxOperate(cardNumber, userPIN, value, "savings");
 		}
 		
-		String operateInSavings(double value) {
+		public String operateInSavings(double value) {
 			return operateInSavings(VALID_ACCOUNT, VALID_PIN, value);
 		}
 		
-		String operateInCheckings(int cardNumber, int userPIN, double value) {
+		public String operateInCheckings(int cardNumber, int userPIN, double value) {
 			return auxOperate(cardNumber, userPIN, value, "checking");
 		}
 		
-		String operateInCheckings(double value) {
+		public String operateInCheckings(double value) {
 			return operateInCheckings(VALID_ACCOUNT, VALID_PIN, value);
 		}
 
-		String operateInMoneyMarket(int cardNumber, int userPIN, double value) {
+		public String operateInMoneyMarket(int cardNumber, int userPIN, double value) {
 			return auxOperate(cardNumber, userPIN, value, "moneyMarket");
 		}
 		
-		String operateInMoneyMarket(double value) {
+		public String operateInMoneyMarket(double value) {
 			return operateInMoneyMarket(value);
 		}
 		
@@ -95,37 +95,37 @@ public abstract class AbstractOperation {
 			return answer;
 		}
 		
-		String operateInSavings(int cardNumber, int userPIN, double value) {
+		public String operateInSavings(int cardNumber, int userPIN, double value) {
 			return auxOperate(cardNumber, userPIN, value, "savings");
 		}
 		
-		String operateInSavings(double value) {
+		public String operateInSavings(double value) {
 			return operateInSavings(VALID_ACCOUNT, VALID_PIN, value);
 		}
 
-		String operateInCheckings(int cardNumber, int userPIN, double value) {
+		public String operateInCheckings(int cardNumber, int userPIN, double value) {
 			return auxOperate(cardNumber, userPIN, value, "checking");
 		}
 		
-		String operateInCheckings(double value) {
+		public String operateInCheckings(double value) {
 			return operateInCheckings(VALID_ACCOUNT, VALID_PIN, value);
 		}
 
-		String operateInMoneyMarket(int cardNumber, int userPIN, double value) {
+		public String operateInMoneyMarket(int cardNumber, int userPIN, double value) {
 			if (!ATMExec.isValidCard(cardNumber)) return "Invalid card"; 
 			if (!ATMExec.isValidPIN(userPIN)) return "PIN was incorrect";
 			
 			return "Invalid account type";
 		}
 		
-		String operateInMoneyMarket(double value) {
+		public String operateInMoneyMarket(double value) {
 			return operateInMoneyMarket(VALID_ACCOUNT, VALID_PIN, value);
 		}
 	}
 	
 	public class Transfer extends AbstractOperation{
 		
-		String transferMoney(int cardNumber, int userPIN, String sourceAccount, String destinyAccount, double amount){
+		public String transferMoney(int cardNumber, int userPIN, String sourceAccount, String destinyAccount, double amount){
 			String msg = detectInvalid(cardNumber, userPIN);
 			if (msg != null) return msg;
 			
@@ -143,7 +143,7 @@ public abstract class AbstractOperation {
 			return msg;
 		}
 		
-		String transferMoney(String sourceAccount, String destinyAccount, double amount) {
+		public String transferMoney(String sourceAccount, String destinyAccount, double amount) {
 			return transferMoney(VALID_ACCOUNT, VALID_PIN, sourceAccount, destinyAccount, amount);
 		}
 		
@@ -152,38 +152,39 @@ public abstract class AbstractOperation {
 	public class BalanceInquiry extends AbstractOperation{
 		
 		
-		String operateInSavings(int cardNumber, int userPIN) {
+		public String operateInSavings(int cardNumber, int userPIN) {
 			String answer = detectInvalid(cardNumber, userPIN);
 			if (answer != null) return answer;
 			
 			return "TOTAL BAL[savings]: $" + savings;
 		}
 		
-		String operateSavings() {
+		public String operateSavings() {
 			return operateInSavings(VALID_ACCOUNT, VALID_PIN);
 		}
 
-		String operateInCheckings(int cardNumber, int userPIN) {
+		public String operateInCheckings(int cardNumber, int userPIN) {
 			String answer = detectInvalid(cardNumber, userPIN);
 			if (answer != null) return answer;
 			
 			return "TOTAL BAL[checking]: $" + checking;
 		}
 		
-		String operateInCheckings() {
+		public String operateInCheckings() {
 			return operateInCheckings(VALID_ACCOUNT, VALID_PIN);
 		}
 
-		String operateInMoneyMarket(int cardNumber, int userPIN) {
+		public String operateInMoneyMarket(int cardNumber, int userPIN) {
 			if (!ATMExec.isValidCard(cardNumber)) return "Invalid card"; 
 			if (!ATMExec.isValidPIN(userPIN)) return "PIN was incorrect";
 			
 			return "Invalid account type";
 		}
 		
-		String operateInMoneyMarket() {
+		public String operateInMoneyMarket() {
 			return operateInMoneyMarket(VALID_ACCOUNT, VALID_PIN);
 		}
 		
 	}
 }
+

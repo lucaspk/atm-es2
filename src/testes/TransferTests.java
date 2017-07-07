@@ -4,7 +4,6 @@ import org.junit.*;
 
 import api.ATMExec;
 import api.AbstractOperation;
-import api.AbstractOperation.BalanceInquiry;
 import api.AbstractOperation.Transfer;
 
 public class TransferTests {

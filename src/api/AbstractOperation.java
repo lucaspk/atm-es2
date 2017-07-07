@@ -38,14 +38,14 @@ public abstract class AbstractOperation {
 public class Withdrawal extends AbstractOperation{
 		
 		private String auxOperate(int cardNumber, int userPIN, double value, String accountType){
+			if (value > ATMExec.getAmountOfCashInDispenser()) return "Insufficient cash available";
+			
 			String answer = detectInvalid(cardNumber, userPIN);
 			if (answer != null) return answer;
 			
-			answer = "Insufficient cash avaliable";
+			answer = "Insufficient available balance";
 			double currentSavings = accounts.get(accountType);
-			if (currentSavings > value && 
-					currentSavings - value >= 0 && 
-					ATMExec.getAmountOfCashInDispenser() % value == 0.0) {
+			if (currentSavings >= value) {
 				currentSavings -= value;
 				accounts.put(accountType, currentSavings);
 				answer = "Would you like to do another transaction?";

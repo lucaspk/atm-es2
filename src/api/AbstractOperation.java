@@ -15,16 +15,12 @@ public abstract class AbstractOperation {
 		accounts.put("checking", checking);
 		accounts.put("moneyMarket", moneyMarket);
 	}
-	
-	abstract String operateInSavings(double value);
-	abstract String operateInCheckings(double value);
-	abstract String operateInMoneyMarket(double value);
-	
+			
 	public static Map<String, Double> getAccounts() {
 		return accounts;
 	}
 	
-	public static void updateAccount(String account, double newValue){
+	public void updateAccount(String account, double newValue){
 		accounts.put(account, newValue);
 	}
 	
@@ -48,17 +44,15 @@ public abstract class AbstractOperation {
 			return answer;
 		}
 		
-		@Override
+		
 		String operateInSavings(double value) {
 			return auxOperate(value, "savings");
 		}
-
-		@Override
+		
 		String operateInCheckings(double value) {
 			return auxOperate(value, "checking");
 		}
 
-		@Override
 		String operateInMoneyMarket(double value) {
 			return auxOperate(value, "moneyMarket");
 		}
@@ -71,30 +65,27 @@ public abstract class AbstractOperation {
 			String answer = "Exception in thread Thread-2 for " + String.valueOf(value);
 			double currentSavings = AbstractOperation.getAmountOfCashFromAccount(accountType);
 			if (value >= 0.0 && value <= 9999999.99) {
-				answer = "TOTAL BALANCE $" + (currentSavings + value);
+				answer = "Would you like to do another transaction?";
 				accounts.put(accountType, currentSavings + value);
 			}
 			return answer;
 		}
 		
-		@Override
 		String operateInSavings(double value) {
 			return auxOperate(value, "savings");
 		}
 
-		@Override
 		String operateInCheckings(double value) {
 			return auxOperate(value, "checking");
 		}
 
-		@Override
 		String operateInMoneyMarket(double value) {
 			return "Invalid account type";
 		}
 		
 	}
 	
-	public class Transfer{
+	public class Transfer extends AbstractOperation{
 		
 		String transferMoney(String sourceAccount, String destinyAccount, double amount){
 			String msg = "Insufficient avaliable balance";
@@ -104,16 +95,16 @@ public abstract class AbstractOperation {
 				msg = "Can't transfer money from one account to itself";
 			}
 			if (amount < currentSourceCash && currentSourceCash - amount >= 0.0){
-				AbstractOperation.updateAccount(sourceAccount, currentSourceCash - amount);
-				AbstractOperation.updateAccount(destinyAccount, currentDestinyCash + amount);
-				msg = "TRANSFER FROM: " + sourceAccount + " TO: " + destinyAccount + "\n" + "Amount: $" + amount;
+				this.updateAccount(sourceAccount, currentSourceCash - amount);
+				this.updateAccount(destinyAccount, currentDestinyCash + amount);
+				msg = "Would you like to do another transaction?";
 			}					
 			return msg;
 		}
 		
 	}
 	
-	public class BalanceInquiry{
+	public class BalanceInquiry extends AbstractOperation{
 		
 		
 		String operateInSavings() {

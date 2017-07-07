@@ -3,9 +3,9 @@ package api;
 import simulation.*;
 
 public final class ATMExec {
-	
+	private AbstractOperation operation;
 	private boolean isOn;
-	private static int amountOfCashInDispenser;
+	private static long amountOfCashInDispenser;
 	private int cardNumber;
 	private int[] PIN = {0, 42, 123, 1234};
 	private int userPIN;
@@ -24,11 +24,13 @@ public final class ATMExec {
 		return isOn;
 	}
 	
-	public String insertBills(int billsNumber){
+	public String insertBills(String billsNumber){
 		String answer = "Must be a valid integer >= 0";
-		if (billsNumber >= 0 && String.valueOf(billsNumber).length() < 10) {
-			amountOfCashInDispenser = 20*billsNumber;
-			answer = "The avaliable dollar value in the cash dispenser is " + amountOfCashInDispenser; 
+		
+		if (!billsNumber.contains(".") && billsNumber.length() < 10) {
+			Long billsNum = Long.parseLong(billsNumber);
+			amountOfCashInDispenser = 20*billsNum;
+			answer = "The avaliable dollar value in the cash dispenser is $" + amountOfCashInDispenser; 
 		}
 		return answer;
 	}
@@ -58,9 +60,15 @@ public final class ATMExec {
 		return  PIN_number == PIN[cardNumber];
 	}
 	
-	public static int getAmountOfCashInDispenser() {
+	public static long getAmountOfCashInDispenser() {
 		return amountOfCashInDispenser;
 	}
 	
+	public void defineOperation(String operationName){
+		operation = OperationFactory.defineOperation(operationName);
+	}
 	
+	public AbstractOperation getOperation() {
+		return operation;
+	}
 }

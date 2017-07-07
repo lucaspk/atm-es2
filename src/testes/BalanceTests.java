@@ -6,7 +6,7 @@ import api.ATMExec;
 import api.AbstractOperation;
 import api.AbstractOperation.BalanceInquiry;
 
-public class BalanceTest {
+public class BalanceTests {
 
 	private ATMExec atm;
 	private BalanceInquiry operation;

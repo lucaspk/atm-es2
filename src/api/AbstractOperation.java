@@ -127,8 +127,12 @@ public class Withdrawal extends AbstractOperation{
 	public class Transfer extends AbstractOperation{
 		
 		public String transferMoney(int cardNumber, int userPIN, String sourceAccount, String destinyAccount, double amount){
+			if (amount == 0) return null;
+			
 			String msg = detectInvalid(cardNumber, userPIN);
 			if (msg != null) return msg;
+			
+			if (amount >= 1e19) return "Exception";
 			
 			msg = "Insufficient avaliable balance";
 			double currentSourceCash = AbstractOperation.getAmountOfCashFromAccount(sourceAccount);
@@ -136,7 +140,7 @@ public class Withdrawal extends AbstractOperation{
 			if (sourceAccount.equals(destinyAccount)){
 				msg = "Can't transfer money from one account to itself";
 			}
-			if (amount < currentSourceCash && currentSourceCash - amount >= 0.0){
+			if (amount <= currentSourceCash && currentSourceCash - amount >= 0.0){
 				this.updateAccount(sourceAccount, currentSourceCash - amount);
 				this.updateAccount(destinyAccount, currentDestinyCash + amount);
 				msg = "Would you like to do another transaction?";
@@ -145,6 +149,7 @@ public class Withdrawal extends AbstractOperation{
 		}
 		
 		public String transferMoney(String sourceAccount, String destinyAccount, double amount) {
+			
 			return transferMoney(VALID_ACCOUNT, VALID_PIN, sourceAccount, destinyAccount, amount);
 		}
 		

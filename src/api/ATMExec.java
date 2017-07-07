@@ -6,8 +6,8 @@ public final class ATMExec {
 	private AbstractOperation operation;
 	private boolean isOn;
 	private static long amountOfCashInDispenser;
-	private int cardNumber;
-	private int[] PIN = {0, 42, 123, 1234};
+	private static int cardNumber;
+	private static int[] PIN = {0, 42, 123, 1234};
 	private int userPIN;
 	
 	public void turnOn(){
@@ -56,7 +56,11 @@ public final class ATMExec {
 		return answer;
 	}
 	
-	private boolean isValidPIN(int PIN_number){
+	protected static boolean isValidCard(int cardNumber) {
+		return cardNumber > 0 && cardNumber < PIN.length;
+	}
+	
+	protected static boolean isValidPIN(int PIN_number) {
 		return  PIN_number == PIN[cardNumber];
 	}
 	

@@ -31,7 +31,7 @@ public abstract class AbstractOperation {
 	
 	private String detectInvalid(int cardNumber, int userPIN) {
 		if (!ATMExec.isValidCard(cardNumber)) return "Invalid card"; 
-		if (!ATMExec.isValidPIN(userPIN)) return "PIN was incorrect";
+		if (!ATMExec.isValidPIN(cardNumber, userPIN)) return "PIN was incorrect";
 		return null;
 	}
 	
@@ -88,9 +88,10 @@ public class Withdrawal extends AbstractOperation{
 			
 			answer = "Exception in thread Thread-2 for " + String.valueOf(value);
 			double currentSavings = AbstractOperation.getAmountOfCashFromAccount(accountType);
-			if (value >= 0.0 && value <= 9999999.99) {
+			double totalSavings = currentSavings + value;
+			if (value >= 0.0 && totalSavings <= Long.MAX_VALUE / 1e2) {
 				answer = "Would you like to do another transaction?";
-				accounts.put(accountType, currentSavings + value);
+				accounts.put(accountType, totalSavings);
 			}
 			return answer;
 		}
@@ -112,8 +113,8 @@ public class Withdrawal extends AbstractOperation{
 		}
 
 		public String operateInMoneyMarket(int cardNumber, int userPIN, double value) {
-			if (!ATMExec.isValidCard(cardNumber)) return "Invalid card"; 
-			if (!ATMExec.isValidPIN(userPIN)) return "PIN was incorrect";
+			String answer = detectInvalid(cardNumber, userPIN);
+			if (answer != null) return answer;
 			
 			return "Invalid account type";
 		}
@@ -175,8 +176,8 @@ public class Withdrawal extends AbstractOperation{
 		}
 
 		public String operateInMoneyMarket(int cardNumber, int userPIN) {
-			if (!ATMExec.isValidCard(cardNumber)) return "Invalid card"; 
-			if (!ATMExec.isValidPIN(userPIN)) return "PIN was incorrect";
+			String answer = detectInvalid(cardNumber, userPIN);
+			if (answer != null) return answer;
 			
 			return "Invalid account type";
 		}

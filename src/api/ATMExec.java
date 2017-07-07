@@ -6,16 +6,20 @@ public final class ATMExec {
 	private AbstractOperation operation;
 	private boolean isOn;
 	private static long amountOfCashInDispenser;
-	private static long cardNumber;
+	private long cardNumber;
 	private static int[] PIN = {0, 42, 1234, 66, 2145};
 	private long userPIN;
 	
-	protected static boolean isValidCard(int cardNumber) {
+	protected static boolean isValidCard(long cardNumber) {
 		return cardNumber > 0 && cardNumber < PIN.length;
 	}
 	
-	protected static boolean isValidPIN(long PIN_number) {
+	protected static boolean isValidPIN(long cardNumber, long PIN_number) {
 		return  PIN_number == PIN[(int) cardNumber];
+	}
+	
+	private boolean isPossiblePIN(long PIN_number){
+		return PIN_number <= Integer.MAX_VALUE;
 	}
 	
 	public void turnOn(){
@@ -66,7 +70,7 @@ public final class ATMExec {
 		if (PIN_number == 0) {
 			answer = "Waiting for PIN";
 		}
-		else if (isValidPIN(PIN_number)){
+		else if (isPossiblePIN(PIN_number)){
 			this.userPIN = PIN_number;
 			answer = "PIN correct. Please choose transiction type";
 		}
